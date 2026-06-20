@@ -1,0 +1,20 @@
+{
+  "name": "lightsail-sf-enricher",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Severity Factor enricher for Prowler check lightsail_instance_public",
+  "scripts": {
+    "start": "npx ts-node src/index.ts",
+    "start:json": "npx ts-node src/index.ts --resolver json",
+    "start:aws": "npx ts-node src/index.ts --resolver aws --region us-east-1",
+    "typecheck": "npx tsc --noEmit"
+  },
+  "dependencies": {
+    "@aws-sdk/client-lightsail": "^3.600.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0",
+    "@types/node": "^20.14.0"
+  }
+}

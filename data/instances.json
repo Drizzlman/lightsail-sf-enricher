@@ -1,0 +1,124 @@
+[
+  {
+    "name": "prod-wordpress",
+    "region": "us-east-1",
+    "publicIp": "54.123.45.67",
+    "privateIp": "10.0.1.12",
+    "ports": [
+      {
+        "fromPort": 80,
+        "toPort": 80,
+        "protocol": "tcp",
+        "cidrs": ["0.0.0.0/0"],
+        "ipv6Cidrs": ["::/0"],
+        "cidrListAliases": [],
+        "accessType": "public"
+      },
+      {
+        "fromPort": 443,
+        "toPort": 443,
+        "protocol": "tcp",
+        "cidrs": ["0.0.0.0/0"],
+        "ipv6Cidrs": ["::/0"],
+        "cidrListAliases": [],
+        "accessType": "public"
+      }
+    ],
+    "tags": [
+      { "key": "Environment", "value": "Production" },
+      { "key": "Project", "value": "Website" }
+    ],
+    "state": { "name": "running", "code": 16 }
+  },
+  {
+    "name": "prod-db-server",
+    "region": "us-east-1",
+    "publicIp": "54.123.45.68",
+    "privateIp": "10.0.1.13",
+    "ports": [
+      {
+        "fromPort": 3306,
+        "toPort": 3306,
+        "protocol": "tcp",
+        "cidrs": ["0.0.0.0/0"],
+        "ipv6Cidrs": ["::/0"],
+        "cidrListAliases": [],
+        "accessType": "public"
+      },
+      {
+        "fromPort": 22,
+        "toPort": 22,
+        "protocol": "tcp",
+        "cidrs": ["203.0.113.0/24"],
+        "ipv6Cidrs": [],
+        "cidrListAliases": [],
+        "accessType": "public"
+      }
+    ],
+    "tags": [
+      { "key": "Environment", "value": "Production" },
+      { "key": "Role", "value": "Database" }
+    ],
+    "state": { "name": "running", "code": 16 }
+  },
+  {
+    "name": "dev-web",
+    "region": "eu-west-1",
+    "publicIp": "54.123.45.69",
+    "privateIp": "10.0.2.5",
+    "ports": [
+      {
+        "fromPort": 80,
+        "toPort": 80,
+        "protocol": "tcp",
+        "cidrs": ["10.0.0.0/24"],
+        "ipv6Cidrs": [],
+        "cidrListAliases": [],
+        "accessType": "public"
+      }
+    ],
+    "tags": [
+      { "key": "Environment", "value": "Dev" },
+      { "key": "CostCenter", "value": "RND" }
+    ],
+    "state": { "name": "running", "code": 16 }
+  },
+  {
+    "name": "bastion-host",
+    "region": "us-east-1",
+    "publicIp": "54.123.45.70",
+    "privateIp": "10.0.0.10",
+    "ports": [
+      {
+        "fromPort": 22,
+        "toPort": 22,
+        "protocol": "tcp",
+        "cidrs": ["0.0.0.0/0"],
+        "ipv6Cidrs": ["::/0"],
+        "cidrListAliases": [],
+        "accessType": "public"
+      }
+    ],
+    "tags": [],
+    "state": { "name": "stopped", "code": 80 }
+  },
+  {
+    "name": "all-ports",
+    "region": "us-east-1",
+    "publicIp": "54.123.45.71",
+    "privateIp": "10.0.3.1",
+    "ports": [
+      {
+        "fromPort": 0,
+        "toPort": 65535,
+        "protocol": "tcp",
+        "cidrs": ["0.0.0.0/0"],
+        "ipv6Cidrs": ["::/0"],
+        "cidrListAliases": [],
+        "accessType": "public"
+      }
+    ],
+    "tags": [],
+    "state": { "name": "running", "code": 16 }
+  }
+]

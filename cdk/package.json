@@ -1,0 +1,22 @@
+{
+  "name": "lightsail-sf-cdk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CDK stack to deploy Lightsail instances for SF enricher testing",
+  "scripts": {
+    "cdk": "cdk",
+    "deploy": "cdk deploy",
+    "destroy": "cdk destroy",
+    "synth": "cdk synth"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.150.0",
+    "constructs": "^10.3.0"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.150.0",
+    "typescript": "^5.5.0",
+    "ts-node": "^10.9.2",
+    "@types/node": "^20.14.0"
+  }
+}
