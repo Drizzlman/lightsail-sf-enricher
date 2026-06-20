@@ -1,7 +1,10 @@
-import { BASE_SEVERITY_SCORE, SEVERITY_THRESHOLDS } from "./config";
-import type { SeverityLabel } from "./types";
+import { BASE_SEVERITY_SCORE, SEVERITY_THRESHOLDS } from './config';
+import type { SeverityLabel } from './types';
 
-export function computeFinalSeverity(verdictDeltas: number[]): { score: number; label: SeverityLabel } {
+export function computeFinalSeverity(verdictDeltas: number[]): {
+  score: number;
+  label: SeverityLabel;
+} {
   const totalDelta = verdictDeltas.reduce((sum, d) => sum + d, 0);
   const score = BASE_SEVERITY_SCORE + totalDelta;
 
@@ -11,5 +14,5 @@ export function computeFinalSeverity(verdictDeltas: number[]): { score: number; 
     }
   }
 
-  return { score, label: "LOW" };
+  return { score, label: 'LOW' };
 }

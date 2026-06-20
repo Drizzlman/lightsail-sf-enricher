@@ -1,4 +1,4 @@
-export type PortProtocol = "tcp" | "udp" | "icmp" | "icmpv6" | "all";
+export type PortProtocol = 'tcp' | 'udp' | 'icmp' | 'icmpv6' | 'all';
 
 export interface PortInfo {
   fromPort: number;
@@ -7,7 +7,7 @@ export interface PortInfo {
   cidrs: string[];
   ipv6Cidrs: string[];
   cidrListAliases: string[];
-  accessType: "public" | "private";
+  accessType: 'public' | 'private';
 }
 
 export interface InstanceTag {
@@ -15,7 +15,7 @@ export interface InstanceTag {
   value: string;
 }
 
-export type InstanceStateName = "running" | "stopped" | "pending" | "unknown";
+export type InstanceStateName = 'running' | 'stopped' | 'pending' | 'unknown';
 
 export interface InstanceState {
   name: InstanceStateName;
@@ -35,7 +35,7 @@ export interface InstanceData extends InstanceBase {
   state: InstanceState;
 }
 
-export type SeverityLabel = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
+export type SeverityLabel = 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
 
 export interface SFVerdict {
   factorName: string;
@@ -48,7 +48,7 @@ export interface Finding {
   instanceName: string;
   region: string;
   publicIp: string;
-  baseSeverity: "HIGH";
+  baseSeverity: 'HIGH';
   finalScore: number;
   finalSeverity: SeverityLabel;
   verdicts: SFVerdict[];

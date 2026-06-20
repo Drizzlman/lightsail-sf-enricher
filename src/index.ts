@@ -1,19 +1,19 @@
-import { SourceCidrEvaluator } from "./evaluators/source-cidr";
-import { ServiceSensitivityEvaluator } from "./evaluators/service-sensitivity";
-import { ExposureScopeEvaluator } from "./evaluators/exposure-scope";
-import { EnvironmentTagEvaluator } from "./evaluators/environment-tag";
-import { InstanceStateEvaluator } from "./evaluators/instance-state";
-import { JsonResolver } from "./resolvers/json-resolver";
-import { AwsResolver } from "./resolvers/aws-resolver";
-import { computeFinalSeverity } from "./severity";
-import { formatOutput, printJSON } from "./output/formatter";
-import type { IDataResolver } from "./resolvers/interface";
-import type { Evaluator } from "./evaluators/base";
-import type { InstanceData, Finding, EnricherOutput } from "./types";
+import { SourceCidrEvaluator } from './evaluators/source-cidr';
+import { ServiceSensitivityEvaluator } from './evaluators/service-sensitivity';
+import { ExposureScopeEvaluator } from './evaluators/exposure-scope';
+import { EnvironmentTagEvaluator } from './evaluators/environment-tag';
+import { InstanceStateEvaluator } from './evaluators/instance-state';
+import { JsonResolver } from './resolvers/json-resolver';
+import { AwsResolver } from './resolvers/aws-resolver';
+import { computeFinalSeverity } from './severity';
+import { formatOutput, printJSON } from './output/formatter';
+import type { IDataResolver } from './resolvers/interface';
+import type { Evaluator } from './evaluators/base';
+import type { InstanceData, Finding, EnricherOutput } from './types';
 
-function parseArgs(): { resolver: "json" | "aws"; region?: string; input?: string } {
+function parseArgs(): { resolver: 'json' | 'aws'; region?: string; input?: string } {
   const args = process.argv.slice(2);
-  let resolver: "json" | "aws" = "json";
+  let resolver: 'json' | 'aws' = 'json';
   let region: string | undefined;
   let input: string | undefined;
 
@@ -21,19 +21,19 @@ function parseArgs(): { resolver: "json" | "aws"; region?: string; input?: strin
     const arg = args[i];
     if (!arg) continue;
 
-    if (arg === "--resolver" || arg === "-r") {
+    if (arg === '--resolver' || arg === '-r') {
       const val = args[++i];
-      if (val === "aws") resolver = "aws";
-      else if (val === "json") resolver = "json";
+      if (val === 'aws') resolver = 'aws';
+      else if (val === 'json') resolver = 'json';
       else {
         console.error(`Unknown resolver '${val}'. Use 'json' or 'aws'.`);
         process.exit(1);
       }
-    } else if (arg === "--region") {
+    } else if (arg === '--region') {
       region = args[++i];
-    } else if (arg === "--input" || arg === "-i") {
+    } else if (arg === '--input' || arg === '-i') {
       input = args[++i];
-    } else if (arg === "--help" || arg === "-h") {
+    } else if (arg === '--help' || arg === '-h') {
       printHelp();
       process.exit(0);
     }
@@ -59,13 +59,13 @@ Options:
 }
 
 function createResolver(args: ReturnType<typeof parseArgs>): IDataResolver {
-  if (args.resolver === "json") {
-    const inputPath = args.input || "./data/instances.json";
+  if (args.resolver === 'json') {
+    const inputPath = args.input || './data/instances.json';
     return new JsonResolver(inputPath);
   }
 
   if (!args.region) {
-    console.error("--region is required for aws resolver");
+    console.error('--region is required for aws resolver');
     process.exit(1);
   }
 
@@ -83,23 +83,23 @@ function createEvaluators(): Evaluator[] {
 }
 
 function filterFailedInstances(instances: InstanceData[]): InstanceData[] {
-  return instances.filter((inst) => {
+  return instances.filter(inst => {
     const hasPublicIp = inst.publicIp.length > 0;
-    const hasPublicPort = inst.ports.some((p) => p.accessType === "public");
+    const hasPublicPort = inst.ports.some(p => p.accessType === 'public');
     return hasPublicIp && hasPublicPort;
   });
 }
 
 function evaluateInstance(inst: InstanceData, evaluators: Evaluator[]): Finding {
-  const verdicts = evaluators.map((e) => e.evaluate(inst));
-  const deltas = verdicts.map((v) => v.delta);
+  const verdicts = evaluators.map(e => e.evaluate(inst));
+  const deltas = verdicts.map(v => v.delta);
   const { score, label } = computeFinalSeverity(deltas);
 
   return {
     instanceName: inst.name,
     region: inst.region,
     publicIp: inst.publicIp,
-    baseSeverity: "HIGH" as const,
+    baseSeverity: 'HIGH' as const,
     finalScore: score,
     finalSeverity: label,
     verdicts,
@@ -109,10 +109,13 @@ function evaluateInstance(inst: InstanceData, evaluators: Evaluator[]): Finding 
   };
 }
 
-async function runPipeline(resolver: IDataResolver, evaluators: Evaluator[]): Promise<EnricherOutput> {
+async function runPipeline(
+  resolver: IDataResolver,
+  evaluators: Evaluator[]
+): Promise<EnricherOutput> {
   const instances = await resolver.resolve();
   const failed = filterFailedInstances(instances);
-  const findings = failed.map((inst) => evaluateInstance(inst, evaluators));
+  const findings = failed.map(inst => evaluateInstance(inst, evaluators));
   return formatOutput(findings, instances.length);
 }
 
@@ -124,7 +127,7 @@ async function main(): Promise<void> {
   printJSON(output);
 }
 
-main().catch((err) => {
-  console.error("Fatal error:", err);
+main().catch(err => {
+  console.error('Fatal error:', err);
   process.exit(1);
 });

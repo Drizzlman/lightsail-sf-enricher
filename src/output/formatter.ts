@@ -1,4 +1,4 @@
-import type { Finding, EnricherOutput, SeverityLabel } from "../types";
+import type { Finding, EnricherOutput, SeverityLabel } from '../types';
 
 export function formatOutput(findings: Finding[], totalInstances: number): EnricherOutput {
   const bySeverity: Record<SeverityLabel, number> = {

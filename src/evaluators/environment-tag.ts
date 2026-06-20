@@ -1,23 +1,21 @@
-import { PRODUCTION_ENV_VALUES } from "../config";
-import type { InstanceData, SFVerdict } from "../types";
-import type { Evaluator } from "./base";
+import { PRODUCTION_ENV_VALUES } from '../config';
+import type { InstanceData, SFVerdict } from '../types';
+import type { Evaluator } from './base';
 
 export class EnvironmentTagEvaluator implements Evaluator {
-  readonly name = "EnvironmentTag";
+  readonly name = 'EnvironmentTag';
 
   evaluate(instance: InstanceData): SFVerdict {
-    const envTag = instance.tags.find(
-      (t) => t.key.toLowerCase() === "environment"
-    );
+    const envTag = instance.tags.find(t => t.key.toLowerCase() === 'environment');
 
     if (!envTag) {
       return {
         factorName: this.name,
-        appliedLabel: "NonProduction",
+        appliedLabel: 'NonProduction',
         delta: -1,
         evidence: {
           tags: instance.tags,
-          summary: "No Environment tag found — assumed non-production",
+          summary: 'No Environment tag found — assumed non-production',
         },
       };
     }
@@ -27,7 +25,7 @@ export class EnvironmentTagEvaluator implements Evaluator {
     if (isProd) {
       return {
         factorName: this.name,
-        appliedLabel: "Production",
+        appliedLabel: 'Production',
         delta: 1,
         evidence: {
           tags: instance.tags,
@@ -38,7 +36,7 @@ export class EnvironmentTagEvaluator implements Evaluator {
 
     return {
       factorName: this.name,
-      appliedLabel: "NonProduction",
+      appliedLabel: 'NonProduction',
       delta: -1,
       evidence: {
         tags: instance.tags,

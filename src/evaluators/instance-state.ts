@@ -1,13 +1,13 @@
-import type { InstanceData, SFVerdict } from "../types";
-import type { Evaluator } from "./base";
+import type { InstanceData, SFVerdict } from '../types';
+import type { Evaluator } from './base';
 
 const STATE_VERDICTS: Record<string, { label: string; delta: number; summary: string }> = {
-  running: { label: "Running", delta: 1, summary: "Instance is running — actively reachable" },
-  stopped: { label: "Stopped", delta: -2, summary: "Instance is stopped — not actively reachable" },
+  running: { label: 'Running', delta: 1, summary: 'Instance is running — actively reachable' },
+  stopped: { label: 'Stopped', delta: -2, summary: 'Instance is stopped — not actively reachable' },
 };
 
 export class InstanceStateEvaluator implements Evaluator {
-  readonly name = "InstanceState";
+  readonly name = 'InstanceState';
 
   evaluate(instance: InstanceData): SFVerdict {
     const state = instance.state.name;
@@ -27,7 +27,7 @@ export class InstanceStateEvaluator implements Evaluator {
 
     return {
       factorName: this.name,
-      appliedLabel: "Unknown",
+      appliedLabel: 'Unknown',
       delta: 0,
       evidence: {
         state: instance.state,

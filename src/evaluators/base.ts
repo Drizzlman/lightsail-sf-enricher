@@ -1,4 +1,4 @@
-import type { InstanceData, SFVerdict } from "../types";
+import type { InstanceData, SFVerdict } from '../types';
 
 export interface Evaluator {
   readonly name: string;

@@ -7,14 +7,16 @@
     "start": "npx ts-node src/index.ts",
     "start:json": "npx ts-node src/index.ts --resolver json",
     "start:aws": "npx ts-node src/index.ts --resolver aws --region us-east-1",
-    "typecheck": "npx tsc --noEmit"
+    "typecheck": "npx tsc --noEmit",
+    "format": "prettier --write \"src/**/*.ts\" \"cdk/**/*.ts\" \"*.json\""
   },
   "dependencies": {
     "@aws-sdk/client-lightsail": "^3.600.0"
   },
   "devDependencies": {
+    "@types/node": "^20.14.0",
+    "prettier": "^3.8.4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.0",
-    "@types/node": "^20.14.0"
+    "typescript": "^5.5.0"
   }
 }

@@ -3,10 +3,10 @@ import {
   GetInstancesCommand,
   GetInstancePortStatesCommand,
   GetInstanceStateCommand,
-} from "@aws-sdk/client-lightsail";
-import { validateProtocol, validateState } from "../utils/validation";
-import type { InstanceData, PortInfo, InstanceTag, InstanceState, InstanceBase } from "../types";
-import type { IDataResolver } from "./interface";
+} from '@aws-sdk/client-lightsail';
+import { validateProtocol, validateState } from '../utils/validation';
+import type { InstanceData, PortInfo, InstanceTag, InstanceState, InstanceBase } from '../types';
+import type { IDataResolver } from './interface';
 
 function toPortInfo(ps: {
   fromPort?: number;
@@ -19,17 +19,17 @@ function toPortInfo(ps: {
   return {
     fromPort: ps.fromPort ?? 0,
     toPort: ps.toPort ?? 0,
-    protocol: validateProtocol(ps.protocol || "tcp"),
+    protocol: validateProtocol(ps.protocol || 'tcp'),
     cidrs: ps.cidrs || [],
     ipv6Cidrs: ps.ipv6Cidrs || [],
     cidrListAliases: ps.cidrListAliases || [],
-    accessType: "public",
+    accessType: 'public',
   };
 }
 
 function toInstanceState(s: { name?: string; code?: number } | undefined): InstanceState {
   return {
-    name: validateState(s?.name || "unknown"),
+    name: validateState(s?.name || 'unknown'),
     code: s?.code ?? 0,
   };
 }
@@ -43,7 +43,7 @@ export class AwsResolver implements IDataResolver {
 
   async resolve(): Promise<InstanceData[]> {
     const instances = await this.fetchAllInstances();
-    return Promise.all(instances.map((inst) => this.enrichInstance(inst)));
+    return Promise.all(instances.map(inst => this.enrichInstance(inst)));
   }
 
   private async fetchAllInstances(): Promise<InstanceBase[]> {
@@ -51,18 +51,18 @@ export class AwsResolver implements IDataResolver {
     const response = await this.client.send(command);
     const rawInstances = response.instances || [];
 
-    return rawInstances.map((inst) => {
+    return rawInstances.map(inst => {
       const location = inst.location || {};
-      const tags: InstanceTag[] = (inst.tags || []).map((t) => ({
-        key: t.key || "",
-        value: t.value || "",
+      const tags: InstanceTag[] = (inst.tags || []).map(t => ({
+        key: t.key || '',
+        value: t.value || '',
       }));
 
       return {
-        name: inst.name || "",
-        region: location.regionName || "us-east-1",
-        publicIp: inst.publicIpAddress || "",
-        privateIp: inst.privateIpAddress || "",
+        name: inst.name || '',
+        region: location.regionName || 'us-east-1',
+        publicIp: inst.publicIpAddress || '',
+        privateIp: inst.privateIpAddress || '',
         tags,
       };
     });
